@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/reporte.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<title>Reportes de Ventas</title>
+	
+</head>
+<body>
+	<div class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<a class="navbar-brand"><img src="/img/logo.jpeg" width="80" height="40"></a>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link text-white" href="/comprobantes">Inicio</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-white" href="/registrar">Registrar Comprobante</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-white" href="/reportes">Reportes</a>
+			</li>
+            <li class="nav-item">
+				<a class="nav-link text-white" href="/">Cerrar Sesion</a>
+			</li>
+		</ul>
+	</div>
+	<div id="accordion">
+		<form class="col-sm-8 formulario" action="/pedir" method="POST">
+			<div class="card">
+				<div class="card-header">
+					<a class="card-link text-danger display-4" data-toggle="collapse" href="#collapseOne">
+						Reporte de Ventas
+					</a>
+				</div>
+				<div id="collapseOne" class="collapse show" data-parent="#accordion">
+					<div class="card-body">			
+						<div class="form-group">
+							<label for="sucursal" class="text-dark">Surcursal:</label>
+							<select class="form-control" name="FoB">
+								<option value="F001">Factura Electronica</option>
+								<option value="B001">Boleta Electronica</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="mes" class="text-dark">Mes:</label>
+							<input type="month" name="mes" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="moneda" class="text-dark">Moneda:</label>
+							<select class="form-control" id="sel1" name="money">
+								<option value="">Todos</option>
+								<option value="SOLES">Soles[S/.]</option>
+								<option value="DOLARES">Dolares[$]</option>
+							</select>
+						</div>
+						<input type="submit" value="Ver Pedidos de Venta" class="btn btn-outline-success btn-lg boton">
+					</div>
+				</div>
+			</div>
+		</form>
+		
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/impresion.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<a class="navbar-brand"><img src="/img/logo.jpeg" width="80" height="40"></a>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link text-white" href="/comprobantes">Inicio</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-white" href="/registrar">Registrar Comprobante</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-white" href="/reportes">Reportes</a>
+			</li>
+            <li class="nav-item">
+				<a class="nav-link text-white" onclick="window.print()" href="#">Imprimir</a>
+			</li>
+            <li class="nav-item">
+				<a class="nav-link text-white" href="/">Cerrar Sesion</a>
+			</li>
+		</ul>
+	</div>
+    <form action=""  class="formulario">
+        <div class="cuadrado1">
+            <p class="datos">
+                <b class="negrita">GO-FACT</b><br>
+                Av Santiago de Surco N° 4717, Santiago de Surco 15039<br>
+                Lima-Lima
+            </p>
+            <% if(fob === 'F001'){ %>
+                
+                <p class="serie negrita">
+                    FACTURA ELECTRONICA
+                    <br>
+                    RUC: 10725191109 
+                    <br>
+                    F001-<%= cont %>
+                </p>
+            <% } %>
+            <% if(fob === 'B001'){ %>
+                
+                <p class="serie negrita">
+                    BOLETA ELECTRONICA
+                    <br>
+                    RUC: 10725191109 
+                    <br>
+                    B001-<%= cont %>
+                </p>
+            <% } %>
+        </div>
+        <hr class="linea" >
+        <div class="cuadrado2">
+            <p class="izquierda">Fecha de Vencimiento</p>
+            <p class="medio"> : </p>
+            <p class="izquierda negrita"><%= datos.fecha_venc %></p>
+
+            <p class="izquierda">Fecha de Emision</p>
+            <p class="medio"> : </p>
+            <p class="izquierda negrita"><%= datos.fecha_emi %></p>
+
+            <p class="izquierda">Cliente</p>
+            <p class="medio"> : </p>
+            <p class="izquierda negrita"><%= datos.Cliente %></p>
+            <!-- validar si es dni o factura-->
+            <%if(datos.Ruc.length === 8){%>
+                <p class="izquierda">DNI</p>
+            <%}else{%>
+                <p class="izquierda">RUC</p>
+            <%}%> 
+            <p class="medio"> : </p>
+            <p class="izquierda negrita"><%= datos.Ruc %></p>
+
+            <p class="izquierda">Direccion del Cliente</p>
+            <p class="medio"> : </p>
+            <p class="izquierda negrita"><%= datos.Direccion %></p>
+                
+            <p class="izquierda">Tipo de Moneda</p>
+            <p class="medio"> : </p>
+            
+            <% if(validar){ %>
+                <p class="izquierda negrita"><%= datos.Moneda[0] %></p>
+                <%if(datos.Moneda[0] === "SOLES"){%>
+                    <% tipo = "S/." %>
+                <%}else{%>
+                    <% tipo = "$" %>
+                <%}%>
+            <% } else {%>
+                <p class="izquierda negrita"><%= datos.Moneda %></p>
+                <%if(datos.Moneda === "SOLES"){%>
+                    <% tipo = "S/." %>
+                <%}else{%>
+                    <% tipo = "$" %>
+                <%}%>
+            <% } %>            
+        </div>
+        <div class="cuadrado3">
+            <!--TITULO-->
+            <p class="medio negrita borde">Cantidad</p>
+            <p class="medio negrita borde">Unidad Medida</p>
+            <p class="izquierda negrita borde1">Producto</p>
+            <p class="medio negrita borde">Valor Unitario</p>
+            <p class="medio negrita borde">Base Imponible</p>
+            <!--///////////////////////-->
+            <% Base = 0 %>
+            <% IGV = 0 %>
+            <% Total = 0 %>
+            <% if(validar){ %>
+                <% for(index in datos.Cantidad){ %>
+                    <% Unidad = (datos.Base[index]*1).toFixed(2) %>
+                    <% BaseImpo = (datos.Cantidad[index]*datos.Base[index]) %>
+                    <p class="right"><%= datos.Cantidad[index] %></p>
+                    <p class="center">BOLSA</p>
+                    <p class="left columns2" ><%= datos.Producto[index] %></p>
+                    <p class="right"><%= Unidad %></p>
+                    <p class="right"><%= BaseImpo.toFixed(2) %></p>
+                    <% Base = Base + BaseImpo %>
+                <% } %>
+            <% } else {%>
+                <% Unidad = (datos.Base*1).toFixed(2) %>
+                <% BaseImpo = (datos.Cantidad*datos.Base) %>
+                <p class="right"><%= datos.Cantidad %></p>
+                <p class="center">BOLSA</p>
+                <p class="left columns2" ><%= datos.Producto%></p>
+                <p class="right"><%= Unidad %></p>
+                <p class="right"><%= BaseImpo.toFixed(2) %></p>
+                <% Base = BaseImpo %>
+            <% } %>
+            
+            <% IGV = Base*0.18 %>
+            <% Total = Base + IGV %>
+            </div>
+        </div>
+        <div class="cuadrado4">
+            <div>
+                <br>
+                <br>
+                <br>
+                <div class="rectangulo">Valor de Venta de Operaciones Gratuitas : <p class="borde2">S/ <a id=""> 0.00 </a> </div>
+                <br>
+                <br>
+                <p class="left negrita" id="Letra"></p>
+            </div>
+            <div class="total borde2 ">
+                <p class="right">Sub Total Ventas : </p>
+                <p class=" right borde2"><%= tipo %> <%= Base.toFixed(2) %></p>
+
+                <p class="right">Descuentos :</p>
+                <p class=" right borde2"><%= tipo %> 0.00</p>
+
+                <p class="right">Valor Venta :</p>
+                <p class=" right borde2"><%= tipo %> <%= Base.toFixed(2) %></p>
+                
+                <p class="right">IGV :</p>
+                <p class=" right borde2"><%= tipo %> <%= IGV.toFixed(2) %></p>
+
+                <p class="right">ICBPER :</p>
+                <p class=" right borde2"><%= tipo %> 0.00</p>
+
+                <p class="right">Importe Total :</p>
+                <p class="right borde2"><%= tipo %> <a id="numero"> <%= Total.toFixed(2) %> </a></p>
+            </div>
+        </div>
+        <p class="borde2 footer">Esta es una representación impresa de la factura electrónica, generada en el Sistema de SUNAT. Puede
+            verificarla utilizando su clave SOL.</p>
+    </form>
+</body>
+<script src="/java/imprimir.js"></script>
+</html>

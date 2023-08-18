@@ -1,0 +1,98 @@
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/comprobante.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<title>Factura de Venta</title>
+	
+</head>
+<body background="/img/fondo.jpg">
+	<div class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<a class="navbar-brand"><img src="/img/logo.jpeg" width="80" height="40"></a>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link text-white" href="/comprobantes">Inicio</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-white" href="/registrar">Registrar Comprobante</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-white" href="/reportes">Reportes</a>
+			</li>
+            <li class="nav-item">
+				<a class="nav-link text-white" href="/">Cerrar Sesion</a>
+			</li>
+		</ul>
+	</div>
+	<form class="contenedor" action="/generar" method="POST">
+		<div class="primera">
+			<label class="titulo">Comprobante:</label>
+			<select class="form-control" name="FoB">
+				<option value="F001">Factura Electronica</option>
+				<option value="B001">Boleta Electronica</option>
+			</select>
+		</div>
+		<div class="primera">
+			<p class="titulo">Ruc/Dni Cliente:</p>
+			<input type="text" name="Ruc" class="texto" maxlength="11" minlength="8" required>
+		</div>
+		<div>
+			<p class="titulo">Cliente:</p>
+			<input type="text" name="Cliente" class="texto" required>
+		</div>
+		<div>
+			<p class="titulo">Direccion:</p>
+			<input type="text" name="Direccion" class="texto" required>
+		</div>
+		<div>
+			<p class="titulo">Fecha de Emision:</p>
+			<input type="date" name="fecha_emi" class="texto" required>
+		</div>
+		<div>
+			<p class="titulo">Fecha de Vencimiento:</p>
+			<input type="date" name="fecha_venc" class="texto">
+		</div>
+		<div class="grupo" id="tabla">
+			
+			<div class="productos" id="productos">
+				<div>
+					<p class="titulo">Cantidad:</p>
+					<input type="text" name="Cantidad" id="Cantidade" class="texto derecha" min="0" max="100" required	onkeyup="total()">
+				</div>
+				<div>
+					<p class="titulo">Producto:</p>
+					<input type="text" name="Producto" id="Producto" class="texto" required>
+				</div>
+				<div>
+					<p class="titulo">Moneda:</p>
+					<select class="form-control" name="Moneda">
+						<option value="SOLES">S/.</option>
+						<option value="DOLAR">$.</option>
+					</select>
+				</div>
+				<div> 
+					<p class="titulo">Precio Unidad:</p>
+					<input type="text" name="Base" id="Ventas" class="texto derecha" min="0" required >
+				</div>
+				<div>
+					<p class="titulo">Total+IGV(18%):</p>
+					<input type="text" name="Total" id="Total" class="texto">
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		<button type="button" onclick="anadir()" class="but"> añadir
+		<button type="submit" class="btn btn-outline-success btn-lg boton">Enviar</button>
+		
+	</form>
+	<script src="/java/reporte.js"></script>
+</body>
+
+</html>

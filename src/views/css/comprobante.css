@@ -1,0 +1,51 @@
+
+.contenedor{
+    display: grid;
+    grid-template-columns: 500px 500px;
+    max-width: 1000px;
+    margin: auto;
+    gap: 10px;
+}
+
+.primera{
+    margin-top: 20px;
+}
+
+.titulo{
+    color: white;
+    margin-bottom: 0;
+}
+
+.texto{
+    width: 100%;
+	background: #fff;
+	border: 3px solid transparent;
+    height: 38px;
+	border-radius: 3px;/*centrado */
+	transition: .3s ease all;
+    padding: 10px;
+    color: black;
+}
+.grupo{
+    grid-column: span 2;
+}
+
+.productos{
+    display: grid;
+    grid-template-columns: 200px 300px 70px 200px 150px 50px;
+    gap: 10px;
+}
+.derecha{
+    text-align: right;
+}
+
+.but{
+    width: 100px;
+}
+
+.boton{
+    grid-column: span 2;
+    width: 200px;
+    height: 50px;
+    margin: auto;
+}

@@ -1,0 +1,10 @@
+POST http://localhost:3000/insertar
+Content-Type: application/json
+
+{
+    "nombre":"1",
+    "curso":[
+        "prueba",
+        "caca"
+    ]
+}
